@@ -9,42 +9,39 @@ export default class App extends Component {
     super(props);
     this.state={
       curso:0,
+      periodo:0,
+      turno:0,
       nomeAluno:'',
       cursos:[
-          {key:1,nome:"Administração"},
-          {key:2,nome:"Sistemas de Informação"},
-          {key:3,nome:"Biologia"},
-          {key:4,nome:"Arquitetura e Urbanismo"},
-          {key:5,nome:"Medicina"},
-          {key:6,nome:"Direito"},
-          {key:7,nome:"Psicologia"},
-          {key:8,nome:"Letras"},
-          {key:9,nome:"Enfermagem"},
-          {key:10,nome:"Fisioterapia"}
+          {key:1,nome:"Curso"},
+          {key:2,nome:"Administração"},
+          {key:3,nome:"Sistemas de Informação"},
+          {key:4,nome:"Biologia"},
+          {key:5,nome:"Arquitetura e Urbanismo"},
+          {key:6,nome:"Medicina"},
+          {key:7,nome:"Direito"},
+          {key:8,nome:"Psicologia"},
+          {key:9,nome:"Letras"},
+          {key:10,nome:"Enfermagem"},
+          {key:11,nome:"Fisioterapia"}
       ],
       periodos:[
-        {key:1,periodo:"1º periodo"},
-        {key:2,periodo:"2º periodo"},
-        {key:3,periodo:"3º periodo"},
-        {key:4,periodo:"4º periodo"},
-        {key:5,periodo:"5º periodo"},
-        {key:6,periodo:"6º periodo"},
-        {key:7,periodo:"7º periodo"},
-        {key:8,periodo:"8º periodo"},
-        {key:9,periodo:"9º periodo"},
-        {key:10,periodo:"10º periodo"}
+        {key:1,periodo:"Período"},
+        {key:2,periodo:"1º periodo"},
+        {key:3,periodo:"2º periodo"},
+        {key:4,periodo:"3º periodo"},
+        {key:5,periodo:"4º periodo"},
+        {key:6,periodo:"5º periodo"},
+        {key:7,periodo:"6º periodo"},
+        {key:8,periodo:"7º periodo"},
+        {key:9,periodo:"8º periodo"},
+        {key:10,periodo:"9º periodo"},
+        {key:11,periodo:"10º periodo"}
       ],
       turnos:[
-        {key:1,turno:"Diurno"},
-        {key:2,turno:"Noturno"},
-        {key:3,turno:"Diurno"},
-        {key:4,turno:"Noturno"},
-        {key:5,turno:"Diurno"},
-        {key:6,turno:"Noturno"},
-        {key:7,turno:"Diurno"},
-        {key:8,turno:"Noturno"},
-        {key:9,turno:"Diurno"},
-        {key:10,turno:"Diurno"}
+        {key:1,turno:"Turno"},
+        {key:2,turno:"Diurno"},
+        {key:3,turno:"Noturno"},
       ],
       
 
@@ -88,20 +85,20 @@ export default class App extends Component {
         {cursosItens}
         
       </Picker><br></br>
-      <Picker selectedValue={this.state.curso}
-      onValueChange={(itemValue, itemIndex)=>this.setState({curso:itemValue})}
+      <Picker selectedValue={this.state.periodo}
+      onValueChange={(itemValue, itemIndex)=>this.setState({periodo:itemValue})}
       >
         {periodosItens}
       </Picker><br></br>
-      <Picker selectedValue={this.state.curso}
-      onValueChange={(itemValue,itemIndex)=>this.setState({curso:itemValue})}>
+      <Picker selectedValue={this.state.turno}
+      onValueChange={(itemValue,itemIndex)=>this.setState({turno:itemValue})}>
         {turnosItens}
       </Picker><br></br>
       
       <Text style={styles.cursos}>Informações Inseridas:</Text><br></br>
       <Text style={styles.texto}>Nome: {this.state.nomeAluno}</Text>
       <Text style={styles.cursos}>Curso: {this.state.cursos[this.state.curso].nome}{styles.negrito}</Text>
-      <Text style={styles.cursos}>Período: {this.state.periodos[this.state.curso].periodo}     Turno: {this.state.turnos[this.state.curso].turno}</Text>    
+      <Text style={styles.cursos}>Período: {this.state.periodos[this.state.periodo].periodo}     Turno: {this.state.turnos[this.state.turno].turno}</Text>    
       
       </ScrollView>
       
