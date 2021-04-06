@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text,TextInput,View,ScrollView} from 'react-native';
+import {StyleSheet, Text,TextInput,View,ScrollView,Switch, Button} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import Slider from '@react-native-community/slider';
 import Logo from './src/components/imagem'
 
 
@@ -12,6 +13,7 @@ export default class App extends Component {
       periodo:0,
       turno:0,
       nomeAluno:'',
+      genero:0,
       cursos:[
           {key:1,nome:"Curso"},
           {key:2,nome:"Administração"},
@@ -43,13 +45,25 @@ export default class App extends Component {
         {key:2,turno:"Diurno"},
         {key:3,turno:"Noturno"},
       ],
+      generos:[
+        {key:1,sexo:"Sexo"},
+        {key:2,sexo:"Masculino"},
+        {key:3,sexo:"Feminino"}
+      ],
+      bolsa:0,
+      renda:0,
+      
       
 
     }
     this.pegaNome=this.pegaNome.bind(this);
+    this.pegaIdade=this.pegaIdade.bind(this);
   }
   pegaNome(texto){
     this.setState({nomeAluno:texto});
+  }
+  pegaIdade(texto){
+    this.setState({idadeAluno:texto});
   }
 
   render(){
@@ -62,9 +76,10 @@ export default class App extends Component {
     })
     let turnosItens=this.state.turnos.map((v,k)=>{
       return <Picker.Item key={k} value={k} label={v.turno}/>
-    }
-    
-    )
+    })
+    let generosItens=this.state.generos.map((v,k)=>{
+      return <Picker.Item key={k} value={k} label={v.sexo}/>
+    })
   return (
     
     <ScrollView>
@@ -94,12 +109,37 @@ export default class App extends Component {
       onValueChange={(itemValue,itemIndex)=>this.setState({turno:itemValue})}>
         {turnosItens}
       </Picker><br></br>
+      <TextInput
+      style={styles.input}
+      placeholder='Digite sua idade'
+      onChangeText={this.pegaIdade}
+      /><br></br>
+      <Picker selectedValue={this.state.genero}
+      onValueChange={(itemValue,itemIndex)=>this.setState({genero:itemValue})}>
+      {generosItens}
+      </Picker><br></br>
+      <Text style={styles.cursos}>Possui bolsa?</Text><br></br>
+      <Switch
+        value={this.state.bolsa}
+        onValueChange={(valorSwitch)=>this.setState({bolsa:valorSwitch})}
+        thumbColor="orange"
+      />
       
+      <Text style={styles.cursos}>Informe sua Renda:</Text><br></br>
+      <Slider
+       minimumValue={0}
+       maximumValue={10000}
+       onValueChange={(valorSelecionado)=> this.setState({renda:valorSelecionado})}
+       value={this.state.renda}
+      />
       <Text style={styles.cursos}>Informações Inseridas:</Text><br></br>
       <Text style={styles.texto}>Nome: {this.state.nomeAluno}</Text>
       <Text style={styles.cursos}>Curso: {this.state.cursos[this.state.curso].nome}{styles.negrito}</Text>
-      <Text style={styles.cursos}>Período: {this.state.periodos[this.state.periodo].periodo}     Turno: {this.state.turnos[this.state.turno].turno}</Text>    
-      
+      <Text style={styles.cursos}>Período: {this.state.periodos[this.state.periodo].periodo}     Turno: {this.state.turnos[this.state.turno].turno}</Text> <br></br>
+      <Text style={styles.texto}>Idade: {this.state.idadeAluno}</Text> 
+      <Text style={styles.cursos}>Sexo: {this.state.generos[this.state.genero].sexo}</Text>
+      <Text style={styles.cursos}>Renda: {this.state.renda.toFixed(2)}</Text><br></br>
+      <Text style={styles.curso}>Bolsa:{(this.state.bolsa)?"Sim":"Não"}</Text>
       </ScrollView>
       
     )
