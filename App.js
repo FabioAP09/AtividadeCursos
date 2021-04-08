@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text,TextInput,View,ScrollView,Switch, Button} from 'react-native';
+import {StyleSheet, Text,TextInput,View,ScrollView,Switch, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import Logo from './src/components/imagem'
@@ -58,6 +58,7 @@ export default class App extends Component {
     }
     this.pegaNome=this.pegaNome.bind(this);
     this.pegaIdade=this.pegaIdade.bind(this);
+    this.salvaInfo=this.salvaInfo(this);
   }
   pegaNome(texto){
     this.setState({nomeAluno:texto});
@@ -65,6 +66,21 @@ export default class App extends Component {
   pegaIdade(texto){
     this.setState({idadeAluno:texto});
   }
+  salvaInfo(){
+    this.setState({
+      Nome:this.state.nomeAluno,
+      Curso:this.state.cursos[this.state.curso].nome,
+      Periodo:this.state.periodos[this.state.periodo].periodo,
+      Turno:this.state.turnos[this.state.turno].turno,
+      Idade:this.state.idadeAluno,
+      Sexo:this.state.generos[this.state.genero].sexo,
+      Renda:this.state.renda.toFixed(2),
+      Bolsa:(this.state.bolsa)?"Sim":"Não"
+      
+    });
+    alert('Salvo com Sucesso!')
+  }
+  
 
   render(){
     let cursosItens=this.state.cursos.map((v,k)=>{
@@ -88,11 +104,13 @@ export default class App extends Component {
       </View>
       <Text>Selecione os parâmetros:</Text><br></br>
       <TextInput
+      value={this.state.inputNome}
       style={styles.input}
       placeholder='Digite seu nome'
       onChangeText={this.pegaNome}
       />
       <Picker
+      value={this.state.valorCurso}
       selectedValue={this.state.curso}
       onValueChange={(itemValue, itemIndex)=> this.setState({curso:itemValue})}
       >
@@ -100,21 +118,22 @@ export default class App extends Component {
         {cursosItens}
         
       </Picker><br></br>
-      <Picker selectedValue={this.state.periodo}
+      <Picker value={this.state.valorPeriodo} selectedValue={this.state.periodo}
       onValueChange={(itemValue, itemIndex)=>this.setState({periodo:itemValue})}
       >
         {periodosItens}
       </Picker><br></br>
-      <Picker selectedValue={this.state.turno}
+      <Picker value={this.state.valorTurno} selectedValue={this.state.turno}
       onValueChange={(itemValue,itemIndex)=>this.setState({turno:itemValue})}>
         {turnosItens}
       </Picker><br></br>
       <TextInput
+      value={this.state.inputIdade}
       style={styles.input}
       placeholder='Digite sua idade'
       onChangeText={this.pegaIdade}
       /><br></br>
-      <Picker selectedValue={this.state.genero}
+      <Picker value={this.state.valorGenero} selectedValue={this.state.genero}
       onValueChange={(itemValue,itemIndex)=>this.setState({genero:itemValue})}>
       {generosItens}
       </Picker><br></br>
@@ -132,14 +151,21 @@ export default class App extends Component {
        onValueChange={(valorSelecionado)=> this.setState({renda:valorSelecionado})}
        value={this.state.renda}
       />
-      <Text style={styles.cursos}>Informações Inseridas:</Text><br></br>
-      <Text style={styles.texto}>Nome: {this.state.nomeAluno}</Text>
-      <Text style={styles.cursos}>Curso: {this.state.cursos[this.state.curso].nome}{styles.negrito}</Text>
-      <Text style={styles.cursos}>Período: {this.state.periodos[this.state.periodo].periodo}     Turno: {this.state.turnos[this.state.turno].turno}</Text> <br></br>
-      <Text style={styles.texto}>Idade: {this.state.idadeAluno}</Text> 
-      <Text style={styles.cursos}>Sexo: {this.state.generos[this.state.genero].sexo}</Text>
-      <Text style={styles.cursos}>Renda: {this.state.renda.toFixed(2)}</Text><br></br>
-      <Text style={styles.curso}>Bolsa:{(this.state.bolsa)?"Sim":"Não"}</Text>
+      <TouchableOpacity onPress={this.salvaInfo}>
+          <Text style={styles.button}>Salvar</Text>
+        </TouchableOpacity>
+        <View>
+        <Text style={styles.cursos}>
+          {this.state.nomeAluno}<br></br>
+          {this.state.cursos[this.state.curso].nome}<br></br>
+          {this.state.periodos[this.state.periodo].periodo}<br></br>
+          {this.state.turnos[this.state.turno].turno}<br></br>
+          {this.state.idadeAluno}<br></br>
+          {this.state.generos[this.state.genero].sexo}<br></br>
+          {this.state.renda.toFixed(2)}<br></br>
+          {(this.state.bolsa)?"Sim":"Não"}
+          </Text>
+        </View>
       </ScrollView>
       
     )
@@ -197,5 +223,12 @@ const styles = StyleSheet.create({
     marginTop:15,
     fontSize:15,
     
+  },
+  button:{
+    backgroundColor:'#222',
+    color:'#FFF',
+    height:40,
+    padding:10,
+    marginLeft:4,
   },
 });
